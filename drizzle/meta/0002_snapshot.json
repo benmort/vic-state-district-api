@@ -1,0 +1,241 @@
+{
+  "id": "0361a0d6-fcb2-41ee-b891-821f73cca432",
+  "prevId": "a11b98f3-6aa4-4a86-827f-38e595edfcb0",
+  "version": "5",
+  "dialect": "pg",
+  "tables": {
+    "districts": {
+      "name": "districts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "district_id": {
+          "name": "district_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mp_id": {
+          "name": "mp_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "districts_mp_id_mps_id_fk": {
+          "name": "districts_mp_id_mps_id_fk",
+          "tableFrom": "districts",
+          "tableTo": "mps",
+          "columnsFrom": [
+            "mp_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "districts_district_id_unique": {
+          "name": "districts_district_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "district_id"
+          ]
+        }
+      }
+    },
+    "mps": {
+      "name": "mps",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "party": {
+          "name": "party",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone_number": {
+          "name": "phone_number",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "postcode_districts": {
+      "name": "postcode_districts",
+      "schema": "",
+      "columns": {
+        "postcode_id": {
+          "name": "postcode_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "district_id": {
+          "name": "district_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "postcode_districts_postcode_id_postcodes_id_fk": {
+          "name": "postcode_districts_postcode_id_postcodes_id_fk",
+          "tableFrom": "postcode_districts",
+          "tableTo": "postcodes",
+          "columnsFrom": [
+            "postcode_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "postcode_districts_district_id_districts_id_fk": {
+          "name": "postcode_districts_district_id_districts_id_fk",
+          "tableFrom": "postcode_districts",
+          "tableTo": "districts",
+          "columnsFrom": [
+            "district_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "postcode_districts_postcode_id_district_id_pk": {
+          "name": "postcode_districts_postcode_id_district_id_pk",
+          "columns": [
+            "postcode_id",
+            "district_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "postcodes": {
+      "name": "postcodes",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "postcode_number": {
+          "name": "postcode_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "postcodes_postcode_number_unique": {
+          "name": "postcodes_postcode_number_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "postcode_number"
+          ]
+        }
+      }
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "vic-state-district-api",
+  "version": "1.0.0",
+  "description": "A simple Node.js ES2023 headless API with Drizzle ORM for Victorian state district postcode lookup",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:generate": "drizzle-kit generate:pg",
+    "db:migrate": "drizzle-kit push:pg",
+    "db:studio": "drizzle-kit studio"
+  },
+  "keywords": [
+    "api",
+    "postcode",
+    "victoria",
+    "drizzle",
+    "orm"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "drizzle-orm": "^0.29.0",
+    "express": "^4.18.2",
+    "pg": "^8.11.3",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.10.9",
+    "drizzle-kit": "^0.20.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

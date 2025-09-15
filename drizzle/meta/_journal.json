@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1757904662382,
+      "tag": "0000_steady_shriek",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1757904888081,
+      "tag": "0001_living_lightspeed",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1757915895681,
+      "tag": "0002_conscious_corsair",
+      "breakpoints": true
+    }
+  ]
+}
