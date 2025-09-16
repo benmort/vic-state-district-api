@@ -40,6 +40,21 @@ app.get('/mps', async (req, res) => {
   router.handle(mockReq, mockRes);
 });
 
+// Public data endpoint for MPs table (no authentication required)
+app.get('/mps/data', async (req, res) => {
+  const postcodeRoutes = await import('./routes/postcode.js');
+  const router = postcodeRoutes.default;
+  
+  // Create a mock request/response for the router
+  const mockReq = { ...req, path: '/mps_table' };
+  const mockRes = {
+    ...res,
+    json: (data) => res.json(data)
+  };
+  
+  router.handle(mockReq, mockRes);
+});
+
 // API Authentication & Rate Limiting
 app.use('/api', apiKeyAuth);
 app.use('/api', rateLimit(5000, 15 * 60 * 1000)); // 5000 requests per 15 minutes
@@ -64,6 +79,7 @@ app.get('/', (req, res) => {
     endpoints: {
       health: '/health',
       mps_directory: '/mps (public HTML page)',
+      mps_data: '/mps/data (public JSON data)',
       postcode_lookup: {
         post: '/api/postcode_lookup',
         get: '/api/postcode_lookup/:postcode'
@@ -114,6 +130,7 @@ app.use('*', (req, res) => {
       'GET /',
       'GET /health',
       'GET /mps (public HTML page)',
+      'GET /mps/data (public JSON data)',
       'POST /api/postcode_lookup',
       'GET /api/postcode_lookup/:postcode'
     ]
