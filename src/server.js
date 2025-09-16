@@ -25,35 +25,6 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Public HTML page (no authentication required)
-app.get('/mps', async (req, res) => {
-  const postcodeRoutes = await import('./routes/postcode.js');
-  const router = postcodeRoutes.default;
-  
-  // Create a mock request/response for the router
-  const mockReq = { ...req, path: '/mps_table_html' };
-  const mockRes = {
-    ...res,
-    send: (html) => res.send(html)
-  };
-  
-  router.handle(mockReq, mockRes);
-});
-
-// Public data endpoint for MPs table (no authentication required)
-app.get('/mps/data', async (req, res) => {
-  const postcodeRoutes = await import('./routes/postcode.js');
-  const router = postcodeRoutes.default;
-  
-  // Create a mock request/response for the router
-  const mockReq = { ...req, path: '/mps_table' };
-  const mockRes = {
-    ...res,
-    json: (data) => res.json(data)
-  };
-  
-  router.handle(mockReq, mockRes);
-});
 
 // API Authentication & Rate Limiting
 app.use('/api', apiKeyAuth);
@@ -78,11 +49,8 @@ app.get('/', (req, res) => {
     },
     endpoints: {
       health: '/health',
-      mps_directory: '/mps (public HTML page)',
-      mps_data: '/mps/data (public JSON data)',
       postcode_lookup: {
-        post: '/api/postcode_lookup',
-        get: '/api/postcode_lookup/:postcode'
+        post: '/api/postcode_lookup'
       }
     },
     documentation: {
@@ -129,8 +97,6 @@ app.use('*', (req, res) => {
     availableEndpoints: [
       'GET /',
       'GET /health',
-      'GET /mps (public HTML page)',
-      'GET /mps/data (public JSON data)',
       'POST /api/postcode_lookup',
       'GET /api/postcode_lookup/:postcode'
     ]
