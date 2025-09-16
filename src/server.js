@@ -15,10 +15,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// API Authentication & Rate Limiting
-app.use('/api', apiKeyAuth);
-app.use('/api', rateLimit(100, 15 * 60 * 1000)); // 100 requests per 15 minutes
-
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
@@ -28,6 +24,25 @@ app.get('/health', (req, res) => {
     version: '1.0.0'
   });
 });
+
+// Public HTML page (no authentication required)
+app.get('/mps', async (req, res) => {
+  const postcodeRoutes = await import('./routes/postcode.js');
+  const router = postcodeRoutes.default;
+  
+  // Create a mock request/response for the router
+  const mockReq = { ...req, path: '/mps_table_html' };
+  const mockRes = {
+    ...res,
+    send: (html) => res.send(html)
+  };
+  
+  router.handle(mockReq, mockRes);
+});
+
+// API Authentication & Rate Limiting
+app.use('/api', apiKeyAuth);
+app.use('/api', rateLimit(100, 15 * 60 * 1000)); // 100 requests per 15 minutes
 
 // API routes
 app.use('/api', postcodeRoutes);
@@ -48,6 +63,7 @@ app.get('/', (req, res) => {
     },
     endpoints: {
       health: '/health',
+      mps_directory: '/mps (public HTML page)',
       postcode_lookup: {
         post: '/api/postcode_lookup',
         get: '/api/postcode_lookup/:postcode'
@@ -97,6 +113,7 @@ app.use('*', (req, res) => {
     availableEndpoints: [
       'GET /',
       'GET /health',
+      'GET /mps (public HTML page)',
       'POST /api/postcode_lookup',
       'GET /api/postcode_lookup/:postcode'
     ]

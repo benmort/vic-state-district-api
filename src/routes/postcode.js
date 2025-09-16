@@ -404,7 +404,7 @@ router.get('/mps_table_html', (req, res) => {
     <script>
         async function loadMPsData() {
             try {
-                const response = await fetch('/mps_table');
+                const response = await fetch('/api/mps_table');
                 const result = await response.json();
                 
                 if (!result.success) {
