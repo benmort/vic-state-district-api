@@ -42,7 +42,7 @@ app.get('/mps', async (req, res) => {
 
 // API Authentication & Rate Limiting
 app.use('/api', apiKeyAuth);
-app.use('/api', rateLimit(100, 15 * 60 * 1000)); // 100 requests per 15 minutes
+app.use('/api', rateLimit(5000, 15 * 60 * 1000)); // 5000 requests per 15 minutes
 
 // API routes
 app.use('/api', postcodeRoutes);
@@ -58,7 +58,7 @@ app.get('/', (req, res) => {
       example: 'X-API-Key: demo-api-key-12345'
     },
     rateLimit: {
-      requests: 100,
+      requests: 5000,
       window: '15 minutes'
     },
     endpoints: {
